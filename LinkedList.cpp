@@ -41,7 +41,7 @@ void print(node *head)
 	cout << endl;
 }
 
-void add(node *head, int x)
+node* add(node *head, int x)
 {
 	node *now = head;
 	if (now == NULL)
@@ -52,6 +52,7 @@ void add(node *head, int x)
 			now = now->next;
 		now->next = creatnode(x);
 	}
+	return head;
 }
 
 node *remove(node *head, int x)
@@ -67,8 +68,10 @@ node *remove(node *head, int x)
 		if (nxt->num == x)
 		{
 			now->next = nxt->next;
+			nxt = nxt->next;
 			if (now->next == NULL)
 				return head;
+			continue;
 		}
 		now = now->next;
 		nxt = now->next;
@@ -85,28 +88,28 @@ node *reverse(node *head)
 	node *pre = head;
 	node *lat = now->next;
 	pre->next = NULL;
-	do
+	while (lat != NULL)
 	{
 		now->next = pre;
 		pre = now;
 		now = lat;
 		lat = lat->next;
-	} while (lat != NULL);
+	}
 	now->next = pre;
 	return now;
 }
 
 int main()
 {
-	int n = 5;
-	int num[5] = { 7, 7, 7, 7, 7 };
+	int n = 8;
+	int num[8] = { 1, 2, 3, 4, 5, 7, 7, 7 };
 	node *head = buildlist(num, n);
 	print(head);
 
-	add(head, 6);
+	head = add(head, 6);
 	print(head);
 
-	add(head, 7);
+	head = add(head, 7);
 	print(head);
 
 	head = reverse(head);
