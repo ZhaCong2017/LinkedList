@@ -1,2 +1,3 @@
 # LinkedList
-User struct to realize LinkedList
+Use struct to realize LinkedList
+use vs2013
