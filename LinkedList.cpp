@@ -14,13 +14,13 @@ node *creatnode(int x)
 	now->num = x;
 	return now;
 }
-node *buildlist()
+node *buildlist(int *num, int n)
 {
-	node *head = creatnode(0);
+	node *head = creatnode(num[0]);
 	node *now = head;
-	for (int i = 1; i < 5; i++)
+	for (int i = 1; i < n; i++)
 	{
-		node *tmp = creatnode(i);
+		node *tmp = creatnode(num[i]);
 		now->next = tmp;
 		now = tmp;
 	}
@@ -29,6 +29,8 @@ node *buildlist()
 
 void print(node *head)
 {
+	if (head == NULL)
+		cout << "NULL";
 	while (head != NULL)
 	{
 		cout << head->num;
@@ -54,13 +56,10 @@ void add(node *head, int x)
 
 node *remove(node *head, int x)
 {
+	while (head != NULL && head->num == x)
+		head = head->next;
 	if (head == NULL)
 		return head;
-	if (head->num == x)
-	{
-		head = head->next;
-		return head;
-	}
 	node *now = head;
 	node *nxt = head->next;
 	while (nxt != NULL)
@@ -68,14 +67,13 @@ node *remove(node *head, int x)
 		if (nxt->num == x)
 		{
 			now->next = nxt->next;
-			return head;
+			if (now->next == NULL)
+				return head;
 		}
-		else
-		{
-			now = now->next;
-			nxt = nxt->next;
-		}
+		now = now->next;
+		nxt = now->next;
 	}
+	return head;
 }
 
 
@@ -100,7 +98,9 @@ node *reverse(node *head)
 
 int main()
 {
-	node *head = buildlist();
+	int n = 5;
+	int num[5] = { 7, 7, 7, 7, 7 };
+	node *head = buildlist(num, n);
 	print(head);
 
 	add(head, 6);
